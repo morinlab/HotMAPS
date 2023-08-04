@@ -1,5 +1,6 @@
 """This script loads mutation counts into the MuPIT mutations table."""
 import MySQLdb
+import MySQLdb.cursors
 import os
 import sys
 import argparse
@@ -64,7 +65,8 @@ def main(opts):
     db = MySQLdb.connect(host=opts['host'],
                          user=opts['mysql_user'],
                          passwd=opts['mysql_passwd'],
-                         db=opts['db'])
+                         db=opts['db'],
+                         cursorclass=MySQLdb.cursors.DictCursor, local_infile=1)
     cursor = db.cursor()
 
     # update mutations table

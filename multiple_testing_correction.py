@@ -260,7 +260,9 @@ def main(opts):
         myfunc = max
     for m_file in os.listdir(mupit_dir):
         # print the tumor type we're on
-        ttype = m_file.split('_')[-1]
+        #ttype = m_file.split('_')[-1]
+        ttype = m_file.split('mupit_mutations_')[-1]
+        ttype = ttype[:10]
         # skip cancer type if no mutations/hotspots.
         # usually only happens if they use only a couple structures
         # and not the full PDB
@@ -298,12 +300,12 @@ def main(opts):
             signif_lvl_output.append([ttype, pval_cutoff])
 
     # write to output file
-    with open(out_file, 'wb') as out_file:
+    with open(out_file, 'w') as out_file:
         mywriter = csv.writer(out_file, delimiter='\t', lineterminator='\n')
         mywriter.writerows([header]+output)
 
     # write significance level cutoffs for each tumor type
-    with open(signif_lvl_file, 'wb') as out_file:
+    with open(signif_lvl_file, 'w') as out_file:
         mywriter = csv.writer(out_file, delimiter='\t', lineterminator='\n')
         mywriter.writerows(signif_lvl_output)
     #print("MISSING COUNTS = " + str(MISSING_COUNT))

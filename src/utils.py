@@ -201,8 +201,10 @@ def read_structure(pdb_path, structure_id, quiet=True):
             for chain in model:
                 if chain.id == " ":
                     chain.id = "A"
-                    del model.child_dict[' ']
                     model.child_dict['A'] = chain
+                    assert ' ' not in model.child_dict
+                    #del model.child_dict[' ']
+                    #model.child_dict['A'] = chain
 
         return structure
     except KeyboardInterrupt:

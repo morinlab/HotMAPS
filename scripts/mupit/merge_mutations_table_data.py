@@ -18,7 +18,7 @@ def make_mutations_table_data (mupit_dir):
 
 
 if len(sys.argv) != 2:
-    print 'Usage: python make_table_data.py output_dir'
+    print('Usage: python make_table_data.py output_dir')
     sys.exit()
 
 outdir = sys.argv[1]
