@@ -39,42 +39,40 @@ def main(opts):
                     continue
 
                 # Num sample in each tissue
-                if no_sample.has_key(pdb) == False:
+                if not pdb in no_sample:
                     no_sample[pdb] = {}
                 no_sample[pdb][sample] = True
 
                 # Num sample in all tissues
-                if no_sample_alltissues.has_key(pdb) == False:
+                if not pdb in no_sample_alltissues:
                     no_sample_alltissues[pdb] = {}
                 no_sample_alltissues[pdb][sample] = True
 
-                if seqres_by_pdb.has_key(pdb) == False:
+                if not pdb in seqres_by_pdb:
                     seqres_by_pdb[pdb] = {}
                 seqres_chain = seqres + ':' + chain
                 # Increases tissue specific occurrence.
-                if seqres_by_pdb[pdb].has_key(seqres_chain) == False:
+                if not seqres_chain in seqres_by_pdb[pdb]:
                     seqres_by_pdb[pdb][seqres_chain] = 0
                 seqres_by_pdb[pdb][seqres + ':' + chain] += 1
                 # Increases all-tissue occurrence.
-                if seqres_by_pdb_alltissues.has_key(pdb) == False:
+                if not pdb in seqres_by_pdb_alltissues:
                     seqres_by_pdb_alltissues[pdb] = {}
-                if seqres_by_pdb_alltissues[pdb].has_key(seqres_chain) == False:
+                if not seqres_chain in seqres_by_pdb_alltissues[pdb]:
                     seqres_by_pdb_alltissues[pdb][seqres_chain] = 0
                 seqres_by_pdb_alltissues[pdb][seqres_chain] += 1
             f.close()
 
             # sort PDBs
-            pdbs = seqres_by_pdb.keys()
-            pdbs.sort()
+            pdbs = sorted(seqres_by_pdb)
 
             # write to file
             out_filename = 'collected.' + filename[6:]
             out_filepath = os.path.join(opts['data_dir'], out_filename)
             with open(out_filepath, 'w') as wf:
                 for pdb in pdbs:
-                    seqress = seqres_by_pdb[pdb].keys()
-                    seqress.sort()
-                    line_info = [pdb, str(len(no_sample[pdb].keys())),
+                    seqress = sorted(seqres_by_pdb[pdb])
+                    line_info = [pdb, str(len(list(no_sample[pdb]))),
                                  ', '.join([seqres + '_' + str(seqres_by_pdb[pdb][seqres])
                                             for seqres in seqress])]
                     wf.write('\t'.join(line_info) + '\n')

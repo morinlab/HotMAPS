@@ -91,7 +91,7 @@ def split_file(in_file, num_splits, split_dir, mut_file):
     mut_dict = read_file(m)
 
     # determine total num of ids in file
-    total_ids = len(pdb_dict.keys())
+    total_ids = len(list(pdb_dict.keys()))
     print(total_ids)
     # determine num of ids to put in each split
     num_ids = int(total_ids/num_splits)
@@ -101,7 +101,7 @@ def split_file(in_file, num_splits, split_dir, mut_file):
     count_id = num_ids
 
     # randomize order of insertions
-    keys = pdb_dict.keys()
+    keys = list(pdb_dict.keys())
     random.shuffle(keys)
 
     # iterate through dict and write to files

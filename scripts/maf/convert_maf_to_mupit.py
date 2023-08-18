@@ -48,6 +48,8 @@ def parse_arguments():
 
 def fix_samp_id(mystring):
     """Remove all of the extra ID info from TCGA barcodes."""
+    if isinstance(mystring,int) or isinstance(mystring,float):
+        mystring = str(mystring)
     if mystring.startswith('TCGA'):
         return mystring[:12]
     else:
@@ -221,7 +223,7 @@ def main(opts):
                         counted_bio = True
 
                 # write line
-                line_str = '\t'.join([pdbid, chain, seqres, genomic_pos] + map(str, row[out_cols].tolist())) + '\n'
+                line_str = '\t'.join([pdbid, chain, seqres, str(genomic_pos)] + list(str(x) for x in row[out_cols].tolist())) + '\n'
                 wf.write(line_str)
 
             count += 1

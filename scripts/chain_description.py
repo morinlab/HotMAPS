@@ -59,7 +59,7 @@ def main(opts):
                     pdb_id = line[header2ix['PDBId']]
                     if non_bio_pdb_path.endswith('.gz'):
                         # handle compressed case
-                        with gzip.open(non_bio_pdb_path, 'rb') as gzhandle:
+                        with gzip.open(non_bio_pdb_path, 'rt') as gzhandle:
                             pdb_header = parse_pdb_header(gzhandle)
                     else:
                         # normal .ent file

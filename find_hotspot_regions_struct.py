@@ -251,7 +251,7 @@ def update_graph(struct2graph, all_cogs, signif_struct_info, non_signif_struct_i
             except KeyError:
                 # skip deleted chains, or models without a chain
                 # be careful this catches all keyerrors
-                print cur_pdb
+                print(cur_pdb)
                 pass
 
     return struct2graph, signif_res_neighbors
@@ -354,6 +354,11 @@ def main(opts):
                            for m in mtc_ttype]
 
         # read annotation file
+        # get full ttype string from directory
+        for ann_file in os.listdir(opts['annotation_dir']):
+            prefix = 'mupit_mutations_' + ttype
+            if ann_file.startswith(prefix):
+                ttype = ann_file.split('mupit_mutations_')[-1]
         annotation_file = os.path.join(opts['annotation_dir'],
                                        'mupit_mutations_' + ttype)
         all_annotation, col_pos = read_mupit_file(annotation_file, significant_res)
@@ -423,7 +428,7 @@ def main(opts):
 
 
     # write output
-    with open(opts['output'], 'wb') as handle:
+    with open(opts['output'], 'w') as handle:
         for line in output:
             handle.write('\t'.join(line)+'\n')
 

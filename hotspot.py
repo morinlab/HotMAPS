@@ -144,6 +144,8 @@ def main(opts):
                      for t in unique_ttypes}
         unique_ttypes = list(unique_ttypes)
 
+        # Print current structure
+        print(f"Obtaining tmp info for {structure_id}...")
         # obtain relevant info from structure
         tmp_info = get_structure_info(structure, mchains, mres, mcount,
                                       struct_chains, ttype_ixs)

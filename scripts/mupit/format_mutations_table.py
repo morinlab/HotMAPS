@@ -22,7 +22,7 @@ def main(opts):
 
             # make sure it exists
             if os.path.exists(file_path) == False:
-                print '  does not exist.'
+                print('  does not exist.')
                 continue
 
             # read in data

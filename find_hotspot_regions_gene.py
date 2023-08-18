@@ -242,6 +242,11 @@ def main(opts):
                                for m in mtc_ttype])
 
         # read annotation file
+        # get full ttype string from directory
+        for ann_file in os.listdir(opts['annotation_dir']):
+            prefix = 'mupit_mutations_' + ttype
+            if ann_file.startswith(prefix):
+                ttype = ann_file.split('mupit_mutations_')[-1]
         annotation_file = os.path.join(opts['annotation_dir'], 'mupit_mutations_' + ttype)
         annotation, col_pos = read_mupit_file(annotation_file, significant_res)
         pdb_ix = col_pos['pdb']
@@ -282,7 +287,7 @@ def main(opts):
                 try:
                    tmp_pos =  (s[col_pos['chain']], int(s[col_pos['pdb_res']]))
                 except:
-                    print 'int error'
+                    print(f'int error:\n{s}')
                     continue
                 signif_struct_info[tmp_pos] = (s[anot_gene_ix], s[anot_tx_ix], s[anot_res_ix])
 
@@ -303,7 +308,7 @@ def main(opts):
     output += tmp_out
 
     # write output
-    with open(opts['output'], 'wb') as handle:
+    with open(opts['output'], 'w') as handle:
         for line in output:
             handle.write('\t'.join(line)+'\n')
 

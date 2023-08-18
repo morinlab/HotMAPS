@@ -15,8 +15,8 @@ import logging
 logger = logging.getLogger(__name__)  # module logger
 
 # directories for various pdb files
-import ConfigParser
-config = ConfigParser.SafeConfigParser()
+import configparser
+config = configparser.ConfigParser()
 config.read(os.path.join(file_dir, '../config.txt'))
 refseq_dir = config.get('PDB', 'refseq_homology')
 ensembl_dir = config.get('PDB', 'ensembl_homology')
@@ -91,9 +91,19 @@ def main(opts):
             if struct_id.startswith('ENSP'):
                 # pdb_path = os.path.abspath(os.path.join(ensemble_dir, '{0}.pdb'.format(struct_id[4:].lstrip('0'))))
                 pdb_path = os.path.abspath(os.path.join(ensembl_dir, '{0}.pdb'.format(struct_id)))
+                if not os.path.exists(pdb_path):
+                    if os.path.exists(pdb_path + ".gz"):
+                        pdb_path = pdb_path + ".gz"
             elif struct_id.startswith('NP'):
                 pdb_path = os.path.abspath(os.path.join(refseq_dir, '{0}.pdb'.format(struct_id)))
+                if not os.path.exists(pdb_path):
+                    if os.path.exists(pdb_path + ".gz"):
+                        pdb_path = pdb_path + ".gz"
             else:
+                # Find non-biological assembly files in divided PDB directories
+                subdir = struct_id[1:3]
+                putative_divided_path1 = os.path.join(pdb_dir, subdir, 'pdb{0}.ent.gz'.format(struct_id))
+                putative_divided_path2 = os.path.join(pdb_dir, subdir, 'pdb{0}.pdb.gz'.format(struct_id))
                 # try to get non-biological assembly pdb file path
                 putative_path = os.path.join(pdb_dir, 'pdb{0}.ent.gz'.format(struct_id))
                 # the second path may occur if user downloads PDB from RCSB
@@ -102,6 +112,10 @@ def main(opts):
                     non_biounit_path = putative_path
                 elif os.path.exists(putative_path2):
                     non_biounit_path = putative_path2
+                elif os.path.exists(putative_divided_path1):
+                    non_biounit_path = putative_divided_path1
+                elif os.path.exists(putative_divided_path2):
+                    non_biounit_path = putative_divided_path2
                 else:
                     missing_non_bio_files.append(putative_path)
                 if bio_num_flag:

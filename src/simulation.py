@@ -98,7 +98,7 @@ def generate_null_dist(struct_id, model_info, chain_info,
     # simulation
     sim_density = []
     prng = np.random.RandomState(seed=seed)
-    res_keys = cog.keys()
+    res_keys = list(cog.keys())
     model_diff = False
     chain_diff = False
 

@@ -1,5 +1,5 @@
-import utils
-import pdb_structure as pstruct
+import src.utils
+import src.pdb_structure as pstruct
 
 # get logger
 import logging
