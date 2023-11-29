@@ -191,7 +191,7 @@ def read_structure(pdb_path, structure_id, quiet=True):
     try:
         # handle gziped or uncompressed reading
         if pdb_path.endswith('.gz'):
-            with gzip.open(pdb_path, 'rb') as handle:
+            with gzip.open(pdb_path, 'rt') as handle:
                 structure = pdb_parser.get_structure(structure_id, handle)
         else:
             structure = pdb_parser.get_structure(structure_id, pdb_path)
