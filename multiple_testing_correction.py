@@ -262,7 +262,6 @@ def main(opts):
         # print the tumor type we're on
         #ttype = m_file.split('_')[-1]
         ttype = m_file.split('mupit_mutations_')[-1]
-        ttype = ttype[:10]
         # skip cancer type if no mutations/hotspots.
         # usually only happens if they use only a couple structures
         # and not the full PDB
