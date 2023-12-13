@@ -35,7 +35,7 @@ def parse_arguments():
 def make_mutations_table(cursor, db, file_name):
     """Completely drop mutations table and re-load from file."""
     cursor.execute('drop table if exists mutations')
-    cursor.execute('create table mutations (source varchar(10), tissue varchar(10), structure_id varchar(20), residues varchar(10), occurrence int) engine=innodb')
+    cursor.execute('create table mutations (source varchar(100), tissue varchar(10), structure_id varchar(20), residues varchar(10), occurrence int) engine=innodb')
     cursor.execute('load data local infile \'' + file_name + '\' into table mutations')
     db.commit()
 
