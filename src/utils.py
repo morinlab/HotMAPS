@@ -100,7 +100,7 @@ def read_pdb_info(pdb_info_path):
         assert(all(len(line) == len(header) for line in myreader)), f"Not all lines in {pdb_info_path} contain the same number of columns as the header ({len(header)} columns). If running hotspot in parallel, try to rerun divide_pdb_info.py to resolve issue."
 
         handle.seek(0)
-        handle = next(myreader)
+        header = next(myreader)
 
         for pdbid, lines in it.groupby(myreader, lambda x: x[0]):
             # convert from iterator to list
