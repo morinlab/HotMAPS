@@ -38,6 +38,9 @@ def main(opts):
 
         # iterate over every structure/tumor type pair
         for line in myreader:
+
+            assert(len(line) == len(header)), f"ERROR: A line in {opts['input']} may be truncated and contains incorrect number of columns. This may be due to an error during hotspot.py execution. Please rerun the hotspot.py script again to resolve the error.\nThe line that triggered this error is:\n{line}"
+
             # skip if no p-values
             if not line[pval_ix]:
                 continue
