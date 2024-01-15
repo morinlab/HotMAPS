@@ -8,7 +8,7 @@ def calculate_cutoff(samp_list, mut_threshold=None):
     """Calculates Kandoth et al. hypermutator cutoff or just a single
     mutation count definition for hypermutator status."""
     mut_cts = Counter(samp_list)
-    mut_vals = mut_cts.values()
+    mut_vals = list(mut_cts.values())
     if mut_threshold is None:
         q75, q25 = np.percentile(mut_vals, [75 ,25])
         iqr = q75 - q25
